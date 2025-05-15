@@ -1,7 +1,10 @@
+import { Header, ProductsList } from '@/components/shared'
+
 export default function Home() {
 	return (
-		<>
-			<h1>REACT SNEAKERS</h1>
-		</>
+		<main>
+			<Header />
+			<ProductsList />
+		</main>
 	)
 }

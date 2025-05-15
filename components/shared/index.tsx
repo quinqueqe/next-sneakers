@@ -1,1 +1,5 @@
 export { Container } from './container'
+export { Header } from './header'
+export { ProductsList } from './products-list'
+export { ProductItem } from './product-item'
+export { SearchProduct } from './search-product'
