@@ -26,15 +26,15 @@ model User {
 }
 
 model Product {
-    id       Int    @id @default(autoincrement()) // уникальный id
+    id       Int        @id @default(autoincrement()) // уникальный id
     imageUrl String
     title    String
-    price    String
+    price    Int
+    CartItem CartItem[]
 
     // # даты создания, изменения
-    createdAt DateTime   @default(now()) // дата создания
-    updatedAt DateTime   @updatedAt // дата изменения
-    CartItem  CartItem[]
+    createdAt DateTime @default(now()) // дата создания
+    updatedAt DateTime @updatedAt // дата изменения
 }
 
 model Cart {

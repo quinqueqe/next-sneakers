@@ -1,3 +1,4 @@
+import { products } from './constants/products'
 import prisma from './prisma'
 import { hashSync } from 'bcrypt'
 
@@ -19,6 +20,10 @@ async function up() {
 				role: 'ADMIN',
 			},
 		],
+	})
+
+	await prisma.product.createMany({
+		data: products,
 	})
 }
 
