@@ -16,7 +16,6 @@ model User {
     password String
     role     UserRole @default(USER)
     verified DateTime
-    token    String?
 
     cart Cart?
 
@@ -40,7 +39,7 @@ model Product {
 model Cart {
     id         Int @id @default(autoincrement()) // уникальный id
     totalPrice Int @default(0)
-
+    token String?
     items CartItem[]
 
     user   User? @relation(fields: [userId], references: [id]) // добавили 1  уникальную корзину для каждого пользователя
