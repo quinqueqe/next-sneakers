@@ -1,34 +1,20 @@
-import { Api } from '@/services/api-client'
 import { Product } from '@prisma/client'
 import { create } from 'zustand'
 
-enum Status {
-	LOADING = 'loading',
-	SUCCESS = 'success',
-	ERROR = 'error',
-}
-
 interface SearchState {
 	inputValue: string
-	status: string
 	products: Product[]
+	focus: boolean
 	setInputValue: (value: string) => void
-	fetchGetProducts: (q: string) => void
+	setProducts: (value: Product[]) => void
+	setFocus: (value: boolean) => void
 }
 
 export const useSearch = create<SearchState>()(set => ({
 	inputValue: '',
-	status: Status.LOADING,
 	products: [],
+	focus: false,
 	setInputValue: value => set({ inputValue: value }),
-	fetchGetProducts: async q => {
-		try {
-			set({ status: Status.LOADING })
-			const { data } = await Api.products.search(q)
-			set({ products: data, status: Status.SUCCESS })
-		} catch (error) {
-			console.log(error)
-			set({ status: Status.ERROR })
-		}
-	},
+	setProducts: value => set({ products: value }),
+	setFocus: value => set({ focus: value }),
 }))
