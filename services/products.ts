@@ -4,9 +4,11 @@ import { ApiRoutes } from './constants'
 
 export const search = async (q: string) => {
 	// : Promise<Product[]>
-	return (
-		await axiosInstance.get<Product[]>(ApiRoutes.SEARCH_PRODUCTS, {
+	const res = await axiosInstance.get<Product[]>(
+		ApiRoutes.SEARCH_PRODUCTS,
+		{
 			params: { q }, // получит все то что идет после '?'
-		})
-	).data
+		}
+	)
+	return res
 }

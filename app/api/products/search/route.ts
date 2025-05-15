@@ -7,8 +7,10 @@ export async function GET(req: NextRequest) {
 		where: {
 			title: {
 				contains: q!,
+				mode: 'insensitive',
 			},
 		},
+		take: 12,
 	})
 	return NextResponse.json(products)
 }

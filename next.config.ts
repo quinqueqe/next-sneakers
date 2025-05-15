@@ -1,7 +1,15 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+	/* config options here */
+	images: {
+		domains: [
+			'i.postimg.cc',
+			'media.dodostatic.net',
+			'cdn.dodostatic.net',
+			'localhost',
+		],
+	},
+}
 
-export default nextConfig;
+export default nextConfig
