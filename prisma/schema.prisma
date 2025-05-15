@@ -8,6 +8,23 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model User {
+    id Int @id @default(autoincrement()) // уникальный id
+
+    fullName String
+    email    String?
+    password String
+    role     UserRole @default(USER)
+    verified DateTime
+    token    String?
+
+    cart Cart?
+
+    // # даты создания, изменения
+    createdAt DateTime @default(now()) // дата создания
+    updatedAt DateTime @updatedAt // дата изменения
+}
+
 model Product {
     id       Int    @id @default(autoincrement()) // уникальный id
     imageUrl String
@@ -15,6 +32,48 @@ model Product {
     price    String
 
     // # даты создания, изменения
+    createdAt DateTime   @default(now()) // дата создания
+    updatedAt DateTime   @updatedAt // дата изменения
+    CartItem  CartItem[]
+}
+
+model Cart {
+    id         Int @id @default(autoincrement()) // уникальный id
+    totalPrice Int @default(0)
+
+    items CartItem[]
+
+    user   User? @relation(fields: [userId], references: [id]) // добавили 1  уникальную корзину для каждого пользователя
+    userId Int   @unique
+
+    // # даты создания, изменения
     createdAt DateTime @default(now()) // дата создания
     updatedAt DateTime @updatedAt // дата изменения
+}
+
+model CartItem {
+    id     Int   @id @default(autoincrement()) // уникальный id
+    Cart   Cart? @relation(fields: [cartId], references: [id])
+    cartId Int?
+
+    product Product @relation(fields: [productId], references: [id])
+
+    // # даты создания, изменения
+    createdAt DateTime @default(now()) // дата создания
+    updatedAt DateTime @updatedAt // дата изменения
+    productId Int
+}
+
+model Promo {
+    id    Int    @id @default(autoincrement()) // уникальный id
+    value String
+
+    // # даты создания, изменения
+    createdAt DateTime @default(now()) // дата создания
+    updatedAt DateTime @updatedAt // дата изменения
+}
+
+enum UserRole {
+    USER
+    ADMIN
 }
