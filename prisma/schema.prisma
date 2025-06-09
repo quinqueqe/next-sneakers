@@ -1,0 +1,122 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id Int @id @default(autoincrement()) // уникальный id
+
+    name    String
+    surname String
+
+    email        String    @unique
+    password     String
+    phone        String?
+    totalAmount  Int       @default(0)
+    verified     Boolean   @default(false)
+    verifiedDate DateTime?
+
+    role UserRole @default(USER) // роль пользователя (user, admin)
+
+    cart             Cart[]
+    order            Order[]
+    verifivationCode VerifivationCode?
+    // # даты создания, изменения
+    createdAt        DateTime          @default(now()) // дата создания
+    updatedAt        DateTime          @updatedAt // дата изменения
+}
+
+model Product {
+    id Int @id @default(autoincrement()) // уникальный id
+
+    imageUrl String
+    name     String
+    price    Int
+
+    // # даты создания, изменения
+    createdAt DateTime @default(now()) // дата создания
+    updatedAt DateTime @updatedAt // дата изменения
+}
+
+model Cart {
+    id Int @id @default(autoincrement()) // уникальный id
+
+    totalAmount Int @default(0) // общая сумма товаров в корзине
+
+    // # связи
+    user   User @relation(fields: [userId], references: [id]) // связь с пользователем
+    userId Int
+
+    items CartItem[] // связь с продуктами в корзине
+
+    // # даты создания, изменения
+    createdAt DateTime @default(now()) // дата создания
+    updatedAt DateTime @updatedAt // дата изменения
+}
+
+model CartItem {
+    id Int @id @default(autoincrement()) // уникальный id
+
+    quantity Int @default(1) // количество товара в корзине
+
+    cart   Cart @relation(fields: [cartId], references: [id]) // связь с корзиной
+    cartId Int
+
+    // # даты создания, изменения
+    createdAt DateTime @default(now()) // дата создания
+    updatedAt DateTime @updatedAt // дата изменения
+}
+
+model Order {
+    id Int @id @default(autoincrement()) // уникальный id
+
+    totalAmount Int         @default(0) // общая сумма заказа
+    status      OrderStatus @default(PENDING) // статус заказа (pending, completed, cancelled)
+
+    // # связи
+    user   User @relation(fields: [userId], references: [id]) // связь с пользователем
+    userId Int
+
+    // # даты создания, изменения
+    createdAt DateTime @default(now()) // дата создания
+    updatedAt DateTime @updatedAt // дата изменения
+}
+
+model VerifivationCode {
+    id   Int    @id @default(autoincrement()) // уникальный id
+    code String
+
+    user   User @relation(fields: [userId], references: [id]) // связь с пользователем
+    userId Int  @unique // связь с пользователем
+
+    // # даты создания, изменения
+    createdAt DateTime @default(now()) // дата создания
+    updatedAt DateTime @updatedAt // дата изменения
+
+    @@unique([userId, code]) // если userId и code будут не уникальными, VerifivationCode не будет создаваться
+}
+
+model Promo {
+    id       Int    @id @default(autoincrement()) // уникальный id
+    name     String
+    discount Int
+
+    // # даты создания, изменения
+    createdAt DateTime @default(now()) // дата создания
+    updatedAt DateTime @updatedAt // дата изменения
+}
+
+enum OrderStatus {
+    PENDING // создал заказ, но не сделал оплату (ожидание)
+    SUCCEEDED // создал закал, и была сделана оплата (успешно)
+    CANCELLED // создал заказ, и у него не хватило денег (отмена)
+}
+
+enum UserRole {
+    USER
+    ADMIN
+}
