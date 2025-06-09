@@ -3,14 +3,30 @@
 import React from 'react'
 import { Search } from 'lucide-react'
 import { useSearch } from '@/shared/store/search'
-import { useClickAway } from 'react-use'
+import { useClickAway, useDebounce } from 'react-use'
+import { Api } from '../services/api-client'
 
 export const SearchProduct = () => {
-	const { value, focus, setValue, setFocus } = useSearch()
+	const { value, focus, products, setValue, setFocus, setProducts } =
+		useSearch()
 	const ref = React.useRef(null)
 	useClickAway(ref, () => {
 		setFocus(false)
+		setValue('')
 	})
+
+	useDebounce(
+		async () => {
+			try {
+				const { data } = await Api.products.search(value)
+				setProducts(data)
+			} catch (error) {
+				console.log('[GET_SEARCH_PRODUCTS_ERROR]', error)
+			}
+		},
+		150, // задержка при поиске продукта
+		[value]
+	)
 	return (
 		<div>
 			{focus && (
@@ -18,7 +34,7 @@ export const SearchProduct = () => {
 			)}
 			<div
 				ref={ref}
-				className='flex relative z-31 items-center pl-5 py-4 rounded-2xl bg-[#f9f9f9] w-[650px] max-w-[650px] '
+				className='flex relative z-31 items-center pl-5 py-4 rounded-2xl bg-[#f9f9f9] w-[650px] max-w-[650px]'
 			>
 				<div className='border-r-2 pr-3'>
 					<Search size={18} className='text-[#c0c0c0] ' />
