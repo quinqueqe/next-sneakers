@@ -50,7 +50,7 @@ export const SearchProduct = () => {
 					className='placeholder:text-[#c0c0c0] pl-3 w-[764px] max-w-[764px]'
 				/>
 			</div>
-			<ul className='w-[650px] absolute top-16 left-0 bg-white z-99 rounded-2xl py-2'>
+			<ul className='w-[650px] absolute top-16 left-0 bg-white z-50 rounded-2xl py-2'>
 				{focus &&
 					products.map(product => (
 						<Link href={`/product/${product.id}`} key={product.id}>
