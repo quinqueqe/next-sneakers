@@ -22,7 +22,10 @@ export const Header = () => {
 					</div>
 					<SearchProduct />
 					<div className='flex items-center gap-4'>
-						<Button variant={'outline'} className='flex items-center gap-1'>
+						<Button
+							variant={'outline'}
+							className='flex items-center gap-1 w-[120px]'
+						>
 							<User size={16} />
 							Войти
 						</Button>
