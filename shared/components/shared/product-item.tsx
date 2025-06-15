@@ -12,8 +12,8 @@ export const ProductItem = ({
 	product: { id, name, price, imageUrl },
 }: Props) => {
 	return (
-		<Link href={`/product/${name}`}>
-			<li className='border-2 border-solid border-[#f3f3f3] rounded-[40px]'>
+		<li className='border-2 border-solid border-[#f3f3f3] rounded-[40px]'>
+			<Link href={`/product/${id}`}>
 				<div className='p-[30px] flex flex-col gap-[14px]'>
 					<Image src={imageUrl} alt='img' width={250} height={180} />
 					<p className='text-[20px]'>{name}</p>
@@ -25,7 +25,7 @@ export const ProductItem = ({
 						<Button variant={'default'}>Выбрать</Button>
 					</div>
 				</div>
-			</li>
-		</Link>
+			</Link>
+		</li>
 	)
 }
