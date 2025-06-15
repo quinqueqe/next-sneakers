@@ -13,7 +13,7 @@ export const ProductItem = ({
 }: Props) => {
 	return (
 		<Link href={`/product/${id}`}>
-			<li className='border-2 border-solid border-[#f3f3f3] rounded-[40px]'>
+			<li className='border-2 border-solid border-[#f3f3f3] rounded-[40px] text-start'>
 				<div className='p-[30px] flex flex-col gap-[14px]'>
 					<Image src={imageUrl} alt='img' width={250} height={180} />
 					<p className='text-[20px]'>{name}</p>
