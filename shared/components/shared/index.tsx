@@ -4,4 +4,3 @@ export { ProductItem } from './product-item'
 export { ProductsList } from './products-list'
 export { SearchProduct } from './search-product'
 export { CartButton } from './cart-button'
-
