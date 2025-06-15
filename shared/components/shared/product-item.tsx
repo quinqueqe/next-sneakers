@@ -12,7 +12,7 @@ export const ProductItem = ({
 	product: { id, name, price, imageUrl },
 }: Props) => {
 	return (
-		<Link href={`/product/${name}`}>
+		<Link href={`/product/${id}`}>
 			<li className='border-2 border-solid border-[#f3f3f3] rounded-[40px]'>
 				<div className='p-[30px] flex flex-col gap-[14px]'>
 					<Image src={imageUrl} alt='img' width={250} height={180} />
